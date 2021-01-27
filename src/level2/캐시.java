@@ -3,7 +3,8 @@
  */
 package level2;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author YSM
@@ -13,34 +14,42 @@ public class 캐시 {
 	static class Solution {
 		int HIT = 1, NOHIT = 5;
 	    public int solution(int cacheSize, String[] cities) {
-	    	HashMap<String, Integer> map = new HashMap<>();
+	    	if(cacheSize == 0) return cities.length * NOHIT;
+	    	List<String> list = new ArrayList<String>();
 	    	
-	    	int idx = 0;
 	    	int answer = 0;
 	    	
 	    	for(int i = 0; i < cities.length; i++) {
-	    		if(!map.containsKey(cities[i])) { // 적중 안함
-	    			if(idx < cacheSize) { // 캐시 다 차기 전
-		    			map.put(cities[i], 1);
-		    			idx++;
-	    			} else { // 캐시 다 차고 난 후 
-	    				
-	    			}
-	    			answer += NOHIT;
-	    		} else {
+	    		if(isHit(list, cities[i].toLowerCase(), cacheSize)) {
 	    			answer += HIT;
-	    			map.put(cities[i], map.get(cities[i]) + 1);
+	    		} else {
+	    			answer += NOHIT;
 	    		}
 	    	}
 	    	
 	        return answer;
 	    }
+	    
+		private boolean isHit(List<String> list, String city, int cacheSize) {
+			boolean flag = false;
+			if(list.contains(city)) {
+				list.remove(city);
+				flag = true;
+			} else {
+				if(list.size() == cacheSize) {
+					list.remove(0);
+				}
+				flag = false;
+			}
+			list.add(city);
+			
+			return flag;
+		}
 	}
 	public static void main(String[] args) {
-		int cacheSize = 3;
+		int cacheSize = 2;
 		String[] cities = {
-				"Jeju", "Pangyo", "Seoul", "NewYork", "LA", 
-				"Jeju", "Pangyo", "Seoul", "NewYork", "LA"
+				"Jeju", "Pangyo", "NewYork", "newyork"
 				};
 		
 		System.out.println(new Solution().solution(cacheSize, cities) );
