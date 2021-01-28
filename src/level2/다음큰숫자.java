@@ -3,12 +3,6 @@
  */
 package level2;
 
-import java.util.Stack;
-
-/**
- * @author YSM
- *
- */
 public class 다음큰숫자 {
 	static class Solution {
 	    public int solution(int n) {
