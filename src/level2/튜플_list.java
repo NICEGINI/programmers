@@ -35,21 +35,11 @@ public class 튜플_list{
 			List<Integer> list = new ArrayList<Integer>();
 
 			for(String nums : elements) {
-				sb = new StringBuilder();
-				for(int i = 0; i < nums.length(); i++) {
-					if(nums.charAt(i) == ':') {
-						int next_num = Integer.parseInt(sb.toString());
+				for(String num : nums.split(":")) {
+					int next_num = Integer.parseInt(num);
 						if(!list.contains(next_num)) {
 							list.add(next_num);
-						}
-						sb = new StringBuilder();
-						continue;
 					}
-					sb.append(nums.charAt(i));
-				}
-				int next_num = Integer.parseInt(sb.toString());
-				if(!list.contains(next_num)) {
-					list.add(next_num);
 				}
 			}
 
